@@ -1,0 +1,161 @@
+<html>
+    <head>
+      <title>
+         Preferences
+      </title>
+      <link href="../../static/css/main.css" rel="stylesheet" title="Default Style">
+      <link rel="stylesheet" type="text/css" href="../../static/semantic/dist/semantic.min.css">
+      <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+      <script src="../../static/semantic/dist/semantic.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+      <script src="../../static/scripts/support.js"> </script>
+    </head>
+
+    <body>
+        <div class="ui stackable container menu">
+          <a href="/" class="item">
+            <i class="pie chart icon"></i>
+            <b>Summary</b>
+          </a>
+          {% if logname|length == 0 %}
+              <a href="/login/" class="item">
+                <i class="sign in icon"></i>
+                Sign-in
+              </a>
+              <a href=/signup/ class="item">
+                <i class="add user icon"></i>
+                Sign Up
+              </a>
+          {% else %}
+              <a href="/users/{{ logname }}/" class="item">
+                <i class="user icon"></i>
+                {{ logname }}
+              </a>
+              <a href=/signout/ class="item">
+                <i class="sign out icon"></i>
+                Sign Out
+              </a>
+          {% endif %}
+        </div>
+
+	    <div class="ui container">
+		    <h1> Providers </h1>
+            <div class="ui cards">
+              <div class="card">
+                <div class="content">
+                  <div class="header">Kroger</div>
+                  <div class="description">
+                    The Kroger Company, or simply Kroger, is an American retailing company founded by Bernard Kroger in 1883 in Cincinnati, Ohio.
+                  </div>
+                </div>
+                <div class="ui bottom attached button" onclick="krogerAddProviderTrigger()" id="addKrogerDiv">
+                  <i class="add icon" id="addKrogerDivIcon"></i>
+                  <div id="addKrogerDivText" class="inline-div"> Add Provider </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="content">
+                  <div class="header">Whole Foods</div>
+                  <div class="description">
+                    Whole Foods Market Inc. is an American supermarket chain exclusively featuring foods without artificial preservatives, colors, flavors, sweeteners, and hydrogenated fats.
+                  </div>
+                </div>
+                <div class="ui bottom attached button">
+                  <i class="add icon"></i>
+                  Add Provider
+                </div>
+              </div>
+              <div class="card">
+                <div class="content">
+                  <div class="header">Aldi</div>
+                  <div class="description">
+                    Retail chain selling a range of grocery items, including produce, meat & dairy, at discount prices.
+                  </div>
+                </div>
+                <div class="ui bottom attached button">
+                  <i class="add icon"></i>
+                  Add Provider
+                </div>
+              </div>
+            </div>
+	    </div>
+        <!-- Add Provider Modal -->
+        <div class="ui modal" id="addModal">
+          <i class="close icon"></i>
+          <div class="header">
+            Add Provider?
+          </div>
+          <div class="image content">
+            <div class="ui medium image">
+              <img src="https://www.kroger.com/asset/582f2cdc84ae6caca6ba1277?data=1">
+            </div>
+            <div class="description">
+              <div class="ui header">Do you want to add Kroger as a provider?</div>
+              <p>In order to use Kroger as a provider you will need to provide your Kroger username and password.</p>
+              <form class="ui form">
+                  <div class="field">
+                    <label>Kroger Username</label>
+                    <input type="text" name="username" placeholder="Kroger username" id="username">
+                  </div>
+                  <div class="field">
+                    <label>Kroger Password</label>
+                    <input type="password" name="password" placeholder="Kroger password" id="password">
+                  </div>
+                  <div class="field">
+                    <div class="ui checkbox">
+                      <input type="checkbox" tabindex="0" class="hidden">
+                      <label>I agree to the Terms and Conditions</label>
+                    </div>
+                  </div>
+                </form>
+            </div>
+          </div>
+          <div class="actions">
+            <div class="ui black deny button">
+              Nope
+            </div>
+            <div class="ui positive right labeled icon button" onclick="finishAddKrogerTrigger()">
+              Sign me up!
+              <i class="checkmark icon"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Remove Provider Modal -->
+        <div class="ui modal" id="removeModal">
+          <i class="close icon"></i>
+          <div class="header">
+            Remove Provider?
+          </div>
+          <div class="image content">
+            <div class="ui medium image">
+              <img src="https://www.kroger.com/asset/582f2cdc84ae6caca6ba1277?data=1">
+            </div>
+            <div class="description">
+              <div class="ui header">Do you want to remove Kroger as a provider?</div>
+              <p>This will remove all Kroger-related trip history from your account!</p>
+            </div>
+          </div>
+          <div class="actions">
+            <div class="ui black deny button">
+              Nope
+            </div>
+            <div class="ui negative right labeled icon button" onclick="finishRemoveKrogerTrigger()">
+              Remove Kroger
+              <i class="checkmark icon"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui hidden divider"></div>
+
+	    <div class="ui container">
+		    <h1> Goals </h1>
+            <div class="ui cards" id="goalsDiv">
+
+            </div>
+	    </div>
+    </body>
+    <script src="../../static/scripts/userSettings.js"></script>
+</html>

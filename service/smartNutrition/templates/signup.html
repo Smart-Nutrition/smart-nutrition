@@ -1,0 +1,116 @@
+<html>
+    <head>
+      <title>
+         Sign Up
+      </title>
+      <link href="../static/css/main.css" rel="stylesheet" title="Default Style">
+      <link rel="stylesheet" type="text/css" href="../static/semantic/dist/semantic.min.css">
+      <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+      <script src="../static/semantic/dist/semantic.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+      <script src="../static/scripts/support.js"> </script>
+    </head>
+
+    <body>
+        <div class="ui stackable container menu">
+          <a href="/" class="item">
+            <i class="pie chart icon"></i>
+            <b>Summary</b>
+          </a>
+          {% if logname|length == 0 %}
+              <a href="/login/" class="item">
+                <i class="sign in icon"></i>
+                Sign-in
+              </a>
+              <a href=/signup/ class="item">
+                <i class="add user icon"></i>
+                Sign Up
+              </a>
+          {% else %}
+              <a href="/users/{{ logname }}/" class="item">
+                <i class="user icon"></i>
+                {{ logname }}
+              </a>
+              <a href=/signout/ class="item">
+                <i class="sign out icon"></i>
+                Sign Out
+              </a>
+          {% endif %}
+        </div>
+    
+        <div class="ui stackable container">
+            <form onsubmit="return createUser()" class="ui form" id="signup-form">
+              <div class="field">
+                <label>First Name</label>
+                <input type="text" name="first-name" placeholder="First Name">
+              </div>
+              <div class="field">
+                <label>Last Name</label>
+                <input type="text" name="last-name" placeholder="Last Name">
+              </div>
+              <div class="field">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Email" id="signup-form-username">
+              </div>
+              <div class="field">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Password" id="signup-form-password">
+              </div>
+              <div class="field">
+                <label>Confirm Password</label>
+                <input type="password" name="confirm-password" placeholder="Confirm Password" id="signup-form-confirm-password">
+              </div>
+              <div class="field">
+                <div class="ui checkbox">
+                  <input type="checkbox" tabindex="0" class="hidden">
+                  <label>I agree to the Terms and Conditions</label>
+                </div>
+              </div>
+              <button class="ui button">Submit</button>
+              <div class="ui error message">
+                <div class="header">Passwords don't match</div>
+                <p>Check that your passwords match!</p>
+              </div>
+            </form>
+            
+        </div>
+    </body>
+    
+    <script>
+        function createUser() {
+            // Verify passwords match
+            if (document.getElementById("signup-form-password").value !=
+                document.getElementById("signup-form-confirm-password").value) {
+                document.getElementById("signup-form").className += " error";
+                return false;
+            } else {
+                document.getElementById("signup-form").className = "ui form";
+            }
+        
+        
+            var requestObj = {"username": "", "password": ""};
+            
+            requestObj["username"] = document.getElementById("signup-form-username").value;
+            requestObj["password"] = document.getElementById("signup-form-password").value;
+            
+            //console.log(post("/api/users", requestObj));
+            
+            xhr = new XMLHttpRequest();
+
+            xhr.open('POST', '{{ url_for('users_api_route') }}');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (xhr.status !== 200 && xhr.status !== 201) {
+                    alert('Request failed.  Returned status of ' + xhr.status);
+                }
+                
+                window.location = "/login/";
+            };
+            
+            xhr.send(param(requestObj));
+            
+            return false;
+        }
+    </script>
+</html>

@@ -1,0 +1,68 @@
+<html>
+    <head>
+      <title>
+         Create Goal
+      </title>
+      <link href="../../static/css/main.css" rel="stylesheet" title="Default Style">
+      <link rel="stylesheet" type="text/css" href="../../static/semantic/dist/semantic.min.css">
+      <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+      <script src="../../static/semantic/dist/semantic.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+      <script src="../../static/scripts/support.js"> </script>
+    </head>
+
+    <body>
+        <div class="ui stackable container menu">
+          <a href="/" class="item">
+            <i class="pie chart icon"></i>
+            <b>Summary</b>
+          </a>
+          {% if logname|length == 0 %}
+              <a href="/login/" class="item">
+                <i class="sign in icon"></i>
+                Sign-in
+              </a>
+              <a href=/signup/ class="item">
+                <i class="add user icon"></i>
+                Sign Up
+              </a>
+          {% else %}
+              <a href="/users/{{ logname }}/" class="item">
+                <i class="user icon"></i>
+                {{ logname }}
+              </a>
+              <a href=/signout/ class="item">
+                <i class="sign out icon"></i>
+                Sign Out
+              </a>
+          {% endif %}
+        </div>
+
+	    <div class="ui container">
+		    <h1> Create New Goal </h1>
+
+        <h2> Goal Set Name</h2>
+        <div class="ui input">
+          <input type="text" placeholder="Name for Goal Set" id="goal-set-name">
+        </div>
+        <br>
+        <h2> Goal Desciption</h2>
+        <div class="ui input">
+          <input type="text" placeholder="Description" id="goal-set-description">
+        </div>
+        <br><br>
+        <div id="goal-fields">
+        </div>
+
+        <button class="ui primary button" onclick="saveGoal()">
+          Save
+        </button>
+        <button class="ui button">
+          Discard
+        </button>
+	    </div>
+
+    </body>
+    <script src="../../static/scripts/createGoal.js"></script>
+</html>

@@ -1,0 +1,17 @@
+.inline-div {
+    display: inline;
+}
+
+.faderight {
+    color: white;
+}
+
+.faderight:after {
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    box-shadow: inset -40px 0 10px -10px;
+}
