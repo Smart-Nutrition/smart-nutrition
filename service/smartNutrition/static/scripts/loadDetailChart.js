@@ -68,7 +68,20 @@ function loadDetailFrame() {
                 result.push(attr_map[attributes[i]]);
             }
         }
+        return result;
+    }
 
+    function getLabelKeys() {
+        // Find everything that ends with "gs"
+        var result = [];
+
+        var attributes = Object.keys(summaryData.totals);
+
+        for (var i = 0; i < attributes.length; i++) {
+            if (attributes[i] in attr_map) {
+                result.push(attributes[i]);
+            }
+        }
         return result;
     }
 
@@ -93,6 +106,7 @@ function loadDetailFrame() {
       var userData = getNutrientData();
       var goalData = getGoalData();
       var labels = getLabels();
+      var keys = getLabelKeys();
 
       var data = [];
       var colors = [];
@@ -117,7 +131,7 @@ function loadDetailFrame() {
             }
 
             if (goalAndQuality[1] < .3) {
-                globalBadNutrients.push(labels[i])
+                globalBadNutrients.push(keys[i])
             }
           }
         }
@@ -175,7 +189,7 @@ function loadDetailFrame() {
                   },
                   ticks: {
                        min: 0,
-                       max: 2.1,
+                       max: 2.2,
                        stepSize: 1,
                        callback: function(value) {
                            return Math.floor(value) == value?(100 * value) + "%":""

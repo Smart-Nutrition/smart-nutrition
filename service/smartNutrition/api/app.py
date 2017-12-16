@@ -591,6 +591,7 @@ def recommend_api_route():
         nutrientInfo = db.all_foods.find_one({"name":food})
         outputInfo = {"name":food, "calories":nutrientInfo["calories"]}
         bestNutrients = []
+        bestNutrientScore = -float('inf')
         for n, v in nutrientInfo.items():
             if n in id_map.values():
                 outputInfo[n] = v # Add nutrition info to output
@@ -600,8 +601,10 @@ def recommend_api_route():
                         goalPerCal = float(goalForNutrient["value"]) / float(defaultGoals["goals"]["calories"])
                         realPerCal = v / nutrientInfo["calories"]
                         score = score_for_ratio(realPerCal / goalPerCal, goalForNutrient["type"])
-                        if score > 0.8:
-                            bestNutrients.append(n)
+                        if score > bestNutrientScore:
+                            bestNutrients = [n]
+                            bestNutrientScore = score
+
 
         outputInfo["recommended_for"] = bestNutrients
 

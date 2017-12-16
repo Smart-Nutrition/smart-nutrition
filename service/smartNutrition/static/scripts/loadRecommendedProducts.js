@@ -23,7 +23,7 @@ function loadRecommendedProductsFrame(nutrientList) {
                         <div class='content'> \
                           <div class='header'>" + data.food[i].name + "</div> \
                           <div class='description'> \
-                            <p>This will help you meet your goal for " + data.food[i].recommended_for[0] + "</p> \
+                            <p>This will help you meet your goal for " + attr_map[data.food[i].recommended_for[0]] + "</p> \
                           </div> \
                         </div> \
                       </a> "
