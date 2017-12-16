@@ -91,15 +91,15 @@ def compute_trip_nutrition(trip):
             continue
         matches = []
         for item in r['branded']:
-            lookup = {'nix_item_id':item["nix_item_id"]}
-            r2 = requests.get('https://trackapi.nutritionix.com/v2/search/item', params=lookup, headers=headers).json()
-            if "foods" not in r2 or len(r2["foods"]) != 1:
-                continue
             try:
-                num_servings = qty.to(ureg(clean_unit_name(r2['foods'][0]['serving_unit']))).magnitude / r2['foods'][0]['serving_qty']
+                num_servings = qty.to(ureg(clean_unit_name(item['serving_unit']))).magnitude / item['serving_qty']
             except ValueError:
                 continue
             except pint.errors.UndefinedUnitError:
+                continue
+            lookup = {'nix_item_id':item["nix_item_id"]}
+            r2 = requests.get('https://trackapi.nutritionix.com/v2/search/item', params=lookup, headers=headers).json()
+            if "foods" not in r2 or len(r2["foods"]) != 1:
                 continue
             matches.append(r2['foods'][0])
             break
