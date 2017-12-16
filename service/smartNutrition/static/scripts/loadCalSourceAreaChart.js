@@ -78,6 +78,9 @@ function loadCalSourceFrame() {
               scales: {
                 yAxes: [{
                   stacked: true,
+                  ticks: {
+                    max: 1,
+                  }
                 }],
                 xAxes: [{
                   type: "time",
