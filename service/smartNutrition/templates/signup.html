@@ -38,7 +38,7 @@
               </a>
           {% endif %}
         </div>
-    
+
         <div class="ui stackable container">
             <form onsubmit="return createUser()" class="ui form" id="signup-form">
               <div class="field">
@@ -63,7 +63,7 @@
               </div>
               <div class="field">
                 <div class="ui checkbox">
-                  <input type="checkbox" tabindex="0" class="hidden">
+                  <input type="checkbox">
                   <label>I agree to the Terms and Conditions</label>
                 </div>
               </div>
@@ -73,10 +73,10 @@
                 <p>Check that your passwords match!</p>
               </div>
             </form>
-            
+
         </div>
     </body>
-    
+
     <script>
         function createUser() {
             // Verify passwords match
@@ -87,15 +87,15 @@
             } else {
                 document.getElementById("signup-form").className = "ui form";
             }
-        
-        
+
+
             var requestObj = {"username": "", "password": ""};
-            
+
             requestObj["username"] = document.getElementById("signup-form-username").value;
             requestObj["password"] = document.getElementById("signup-form-password").value;
-            
+
             //console.log(post("/api/users", requestObj));
-            
+
             xhr = new XMLHttpRequest();
 
             xhr.open('POST', '{{ url_for('users_api_route') }}');
@@ -104,12 +104,12 @@
                 if (xhr.status !== 200 && xhr.status !== 201) {
                     alert('Request failed.  Returned status of ' + xhr.status);
                 }
-                
+
                 window.location = "/login/";
             };
-            
+
             xhr.send(param(requestObj));
-            
+
             return false;
         }
     </script>
