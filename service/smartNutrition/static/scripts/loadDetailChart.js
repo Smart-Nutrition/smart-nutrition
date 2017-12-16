@@ -18,6 +18,9 @@ function loadDetailFrame() {
 
             summaryData = data;
             loadDetailChart();
+            if (typeof globalBadNutrients === "undefined") {
+              globalBadNutrients = []
+            }
             loadRecommendedProductsFrame(globalBadNutrients);
         };
 
