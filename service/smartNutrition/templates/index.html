@@ -38,8 +38,7 @@
               </a>
           {% endif %}
         </div>
-
-        <div class="ui two column container grid">
+        <div id="MainDimmable" class="ui two column container grid">
           <div class="column">
             <div class="ui segment">
                 <canvas id="nutPerCalChart" height="100px"></canvas>
@@ -70,10 +69,16 @@
                 <canvas id="foodGroupChart"></canvas>
             </div>
           </div>
+          <div class="ui dimmer segment">
+            <br>
+            <h2 class="ui header inverted">No Data Available</h2>
+            <div class="ui segment inverted very padded text container">
+              <h3>Check <a href="/users/{{ logname }}/">here</a> to make sure your loyalty programs are set up. It takes some time to analyze all of your food, so come back in a few minutes.</h3>
+            </div>
+          </div>
         </div>
 
-
-        <div class="ui hidden divider"></div>
+      <div class="ui hidden divider"></div>
    </body>
 
    <script>
