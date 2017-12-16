@@ -16,7 +16,7 @@ function loadRecommendedProductsFrame(nutrientList) {
 
         for (var i = 0; i < data.food.length; i++) {
           console.log(data.food[i].name);
-          recView.innerHTML += "            <div class='item'>  \
+          recView.innerHTML += "<a class='item' href='https://www.kroger.com/search?query=" + data.food[i].name + "'>  \
                         <div class='ui tiny image'> \
                           <img src='https://semantic-ui.com/images/wireframe/image.png'> \
                         </div> \
@@ -26,7 +26,7 @@ function loadRecommendedProductsFrame(nutrientList) {
                             <p>This will help you meet your goal for " + data.food[i].recommended_for[0] + "</p> \
                           </div> \
                         </div> \
-                      </div> "
+                      </a> "
         }
     };
 
