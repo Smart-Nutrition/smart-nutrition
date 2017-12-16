@@ -111,6 +111,13 @@ def MakeErrResult(code, *messages):
 def MissingKey(key):
     return MakeErrResult(STATUS.BAD_REQUEST, "Missing key '{}'".format(key))
 
+def goal_to_user_goal(goal):
+    goal = clean_mongodb_id(goal)
+    for k, v in goal['goals'].items():
+        goal[k] = v
+    del goal['goals']
+    return goal
+
 def api_create_user():
     if "password" not in request.form:
         return MissingKey("password")
@@ -131,7 +138,7 @@ def api_create_user():
         "salt": salt,
         "providers":{},
         "trips":[],
-        "goals":clean_mongodb_id(db.goals.find_one({}))
+        "goals":goal_to_user_goal(db.goals.find_one({}))
     }
     db.users.insert_one(user)
     return MakeResult(STATUS.CREATED, username = request.form["username"])
