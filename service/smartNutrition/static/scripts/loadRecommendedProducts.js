@@ -1,7 +1,9 @@
-function loadRecommendedProductsFrame() {
+function loadRecommendedProductsFrame(nutrientList) {
     var xhr = new XMLHttpRequest();
 
-    xhr.open('GET', "/api/recommend");
+    var nutrientStr = nutrientList.join(" ");
+
+    xhr.open('GET', "/api/recommend?nutrient=" + nutrientStr);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function() {
         if (xhr.status !== 200 && xhr.status !== 201) {
@@ -30,5 +32,3 @@ function loadRecommendedProductsFrame() {
 
     xhr.send();
 }
-
-loadRecommendedProductsFrame();

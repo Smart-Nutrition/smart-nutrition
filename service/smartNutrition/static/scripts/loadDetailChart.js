@@ -18,6 +18,7 @@ function loadDetailFrame() {
 
             summaryData = data;
             loadDetailChart();
+            loadRecommendedProductsFrame(globalBadNutrients);
         };
 
         xhr.send();
@@ -81,8 +82,9 @@ function loadDetailFrame() {
       } else {
         quality = Math.min(1,Math.pow((actual+eps)/(goal+eps),2)) + Math.min(1,Math.pow((goal+eps)/(actual+eps),2)) - 1
       }
+
       // HSL gradient looks WAAAY better, goes red yellow green instead of red brown green
-      return 'hsl(' + Math.floor(118*quality) + ',' + Math.floor(100-50*quality) + '%, 50%)'
+      return ['hsl(' + Math.floor(118*quality) + ',' + Math.floor(100-50*quality) + '%, 50%)', quality]
       //return 'rgb(' + Math.floor(255-255*quality) + ',' + Math.floor(128*quality) + ', 10)'
     }
 
@@ -106,8 +108,17 @@ function loadDetailFrame() {
       if (goalData.length == userData.length) {
         for (var i = 0; i < userData.length; i++) {
           if (goalData[i].value > 0) {
-            colors.push(makeBarColor(goalData[i].value, userData[i], goalData[i].type))
+            var goalAndQuality = makeBarColor(goalData[i].value, userData[i], goalData[i].type)
+            colors.push(goalAndQuality[0])
             userData[i] = userData[i] / goalData[i].value;
+
+            if (typeof globalBadNutrients === "undefined") {
+              globalBadNutrients = []
+            }
+
+            if (goalAndQuality[1] < .3) {
+                globalBadNutrients.push(labels[i])
+            }
           }
         }
       }
