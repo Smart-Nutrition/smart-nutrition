@@ -90,7 +90,9 @@ def submitTrip(data, user):
 
 
 def krogerScraper(smartusername, user, password):
-    browser = webdriver.Firefox()
+    opts = FirefoxOptions()
+    opts.add_argument("--headless")
+    browser = webdriver.Firefox(firefox_options=opts)
     browser.get("https://www.kroger.com/signin")
 
     username = WebDriverWait(browser, 30).until(
