@@ -527,16 +527,17 @@ def recommend_api_route():
 
     headers = {"x-app-id":"2b34e2d7","x-app-key":"790d666a02c713823502567cc364dc04"}
 
+    defaultGoals = db.goals.find_one({"name":"RDI"})
 
     # Default nutrients
     # calcium cholesterol vitamin-d
     nutrients = ["calcium", "cholesterol", "vit_d"]
 
     if "nutrient" in request.args:
-        n = request.args["nutrient"]
-        nutrients = n.split(" ")
-    """
-    else:
+        if len(request.args["nutrient"]) != 0:
+            n = request.args["nutrient"]
+            nutrients = n.split(" ")
+    """else:
         # Need to get the nutrients that the user needs
         username = active_user()
         if not username and 'username' in request.form:
@@ -551,13 +552,30 @@ def recommend_api_route():
         trips = [t for t in user["trips"] if start < t["time"] < end]
         totals = {field:sum(t[field] for t in trips) for field in base_fields}
         totalsPerCal = {field:value/totals["calories"] for field, value in totals if field != "calories"}
-        relevant_goals = {f:v for f, v in user["goals"].items() if f in (base_fields - frozenset(['calories']))}
-        nutrientScores = {field:score_for_ratio() for i, (field, value) in enumerate()}
+        user_goals = user["goals"]
+        nutrientScores = {}
+        for n, value in totalsPerCal.items():
+            defaultCalories = float(defaultGoals["goals"]["calories"])
+            if n in relevant_goals:
+                goalPerCal = user_goals[n]["value"] / ("calories" in user_goals ? float(user_goals["calories"]) : defaultCalories)
+                nutrientScores[n] = score_for_ratio(value / goalPerCal, user_goals[n]["type"])
+            else:
+                goalPerCal = defaultGoals[n]["value"] / defaultCalories
+                nutrientScores[n] = score_for_ratio(value / goalPerCal, defaultGoals[n]["type"])
+
+        sortedNutrientScores = [{"nutrient":n, "score":s for (n, s) in nutrientScores.items()}]
+        sortedNutrientScores = sorted(sortedNutrientScores, key=itemgetter("score"))
+
+        numNutrients = 5
+
+        if len(sortedNutrientScores) < 5:
+            numNutrients = len(sortedNutrientScores)
+
+        nutrients = [v["nutrient"] for v in list(sortedNutrientScores[:numNutrients])]
         """
 
 
     # Use the needed nutrients to query the food database
-    defaultGoals = db.goals.find_one({"name":"RDI"})
 
     allFoods = {}
     for n in nutrients:
