@@ -136,7 +136,7 @@ function loadDetailFrame() {
               globalBadNutrients = []
             }
 
-            if (goalAndQuality[1] < .3) {
+            if (goalAndQuality[1] < .3 && goalData[i].value > userData[i].value) {
                 globalBadNutrients.push(keys[i])
             }
           }
