@@ -1,5 +1,5 @@
 # Smart Nutrition
-Tracks your nutrition, without you doing crap.
+Tracks your nutrition, without you doing a thing.
 
 ## Important Note
 This project is a webserver with multiple secret keys. The keys stored here are for example only and should not be used in a publicly-accessible web server. Please change the keys if deploying yourself.
