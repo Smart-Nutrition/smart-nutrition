@@ -17,6 +17,9 @@ function loadDetailFrame() {
             console.log(data);
 
             summaryData = data;
+            if (summaryData.trips.length == 0) {
+                $("#MainDimmable").dimmer('show');
+            }
             loadDetailChart();
             if (typeof globalBadNutrients === "undefined") {
               globalBadNutrients = []
