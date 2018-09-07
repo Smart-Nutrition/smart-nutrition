@@ -1,4 +1,7 @@
 # Smart Nutrition
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/Smart-Nutrition/smart-nutrition.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Smart-Nutrition/smart-nutrition/context:javascript)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/Smart-Nutrition/smart-nutrition.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/Smart-Nutrition/smart-nutrition/context:python)
+
 Tracks your nutrition, without you doing a thing.
 
 ## Important Note
