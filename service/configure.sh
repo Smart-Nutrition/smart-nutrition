@@ -1,20 +1,22 @@
 set -e
 set -x
 
-echo "Step 0. Install curl,  python3, python-venv"
+echo "Step 0. Install curl,  python3, python-venv, and gpg"
 
 sudo apt-get -y install curl
 sudo apt-get -y install python3
 sudo apt-get -y install python3-venv
 sudo apt-get -y install sqlite3
+sudo apt-get -y install gpg
 
 echo "Step 0.1 Install node and npm"
 curl --silent --location https://deb.nodesource.com/setup_6.x | sudo bash -
 sudo apt-get install --yes nodejs
+sudo apt-get install -y npm
 
 echo "Step 1. Setup pip virutal environment. Add smartNutrition to env."
 python3 -m venv env
-source env/bin/activate
+. env/bin/activate
 pip3 install --upgrade pip
 pip install -e .
 
